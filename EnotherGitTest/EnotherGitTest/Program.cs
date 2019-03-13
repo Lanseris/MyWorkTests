@@ -8,6 +8,7 @@ namespace EnotherGitTest
         {
             Console.WriteLine("Hello World!");
             Console.WriteLine("Noo, it's MY WORLD!!!");
+            Console.WriteLine("END IT'S OVER!");
         }
     }
 }
