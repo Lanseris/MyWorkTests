@@ -9,14 +9,9 @@ namespace EnotherGitTest
         {
 
             #region AsyncMeethodTests
-
-            AsyncTestsClass.FactorialAsync();   // вызов асинхронного метода
-            Console.WriteLine("Введите число: ");
-            int n = Int32.Parse(Console.ReadLine());
-            Console.WriteLine($"Квадрат числа равен {n * n}");
-
+            AsyncTestsClass.ReadWriteAsync();
+            Console.WriteLine("Некоторая работа");
             #endregion
-
 
             Console.Read();
         }

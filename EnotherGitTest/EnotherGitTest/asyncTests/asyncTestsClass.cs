@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,23 +9,20 @@ namespace EnotherGitTest.asyncTests
 {
     public class AsyncTestsClass
     {
-        public static void Factorial()
+        public static async void ReadWriteAsync()
         {
-            int result = 1;
-            for (int i = 1; i <= 6; i++)
-            {
-                result *= i;
-            }
-            Thread.Sleep(8000);
-            Console.WriteLine($"Факториал равен {result}");
-        }
+            string s = "Hello world! One step at a time";
 
-        // определение асинхронного метода
-        public static async void FactorialAsync()
-        {
-            Console.WriteLine("Начало метода FactorialAsync"); // выполняется синхронно
-            await Task.Run(() => Factorial());                            // выполняется асинхронно
-            Console.WriteLine("Конец метода FactorialAsync");  // выполняется синхронно
+            // hello.txt - файл, который будет записываться и считываться
+            using (StreamWriter writer = new StreamWriter("hello.txt", false))
+            {
+                await writer.WriteLineAsync(s);  // асинхронная запись в файл
+            }
+            using (StreamReader reader = new StreamReader("hello.txt"))
+            {
+                string result = await reader.ReadToEndAsync();  // асинхронное чтение из файла
+                Console.WriteLine(result);
+            }
         }
 
     }
