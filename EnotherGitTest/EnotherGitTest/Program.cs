@@ -1,4 +1,5 @@
 ﻿using System;
+using EnotherGitTest.asyncTests;
 
 namespace EnotherGitTest
 {
@@ -6,9 +7,18 @@ namespace EnotherGitTest
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            Console.WriteLine("Noo, it's MY WORLD!!!");
-            Console.WriteLine("END IT'S OVER!");
+
+            #region AsyncMeethodTests
+
+            AsyncTestsClass.FactorialAsync();   // вызов асинхронного метода
+            Console.WriteLine("Введите число: ");
+            int n = Int32.Parse(Console.ReadLine());
+            Console.WriteLine($"Квадрат числа равен {n * n}");
+
+            #endregion
+
+
+            Console.Read();
         }
     }
 }
