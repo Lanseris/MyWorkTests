@@ -21,7 +21,9 @@ namespace EnotherGitTest
                         #region AsyncMeethodTests
                         AsyncTestsClass.ReadWriteAsync();
                         Console.WriteLine("Некоторая работа");
-                        AsyncTestsClass.FactorialAsync();
+                        var task = AsyncTestsClass.FactorialAsyncSequential();
+                        task.Wait();//ожидание выполнения асинхронного метода 
+                        AsyncTestsClass.FactorialAsyncParallel();
                         #endregion
                         break;
                     default:

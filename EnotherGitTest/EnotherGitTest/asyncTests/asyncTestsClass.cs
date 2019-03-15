@@ -35,12 +35,38 @@ namespace EnotherGitTest.asyncTests
             Console.WriteLine($"Факториал числа {n} равен {result}");
         }
 
-        public static async void FactorialAsync()
+        //запуск задачь последовательно
+        public static async Task FactorialAsyncSequential()
         {
-            Task t1 = Task.Run(() => Factorial(4));
-            Task t2 = Task.Run(() => Factorial(3));
+            Console.WriteLine();
+            Console.WriteLine("Последовательное выполнение асинхронных методов");
+            await Task.Run(() => Factorial(3));
+            await Task.Run(() => Factorial(4));
+            await Task.Run(() => Factorial(5));
+            await Task.Run(() => Factorial(6));
+            await Task.Run(() => Factorial(7));
+            await Task.Run(() => Factorial(8));
+
+        }
+
+        //запуск задачь параллельно
+        //отслеживание выполнения трёх асинхронных методов одновременно
+        public static async void FactorialAsyncParallel()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Параллельное выполлнение ассинхронных методов");
+            Task t1 = Task.Run(() => Factorial(3));
+            Task t2 = Task.Run(() => Factorial(4));
             Task t3 = Task.Run(() => Factorial(5));
-            await Task.WhenAll(new[] { t1, t2, t3 });
+            Task t4 = Task.Run(() => Factorial(6));
+            Task t5 = Task.Run(() => Factorial(7));
+            Task t6 = Task.Run(() => Factorial(8));
+
+            //отслеживает завершение параллельно запущенных асинхронных методов
+            //создаёт новую задачу, которая будет выполнена после завершения 
+            //всех предоставленных задач.
+            await Task.WhenAll(new[] { t1, t2, t3, t4, t5, t6 });
+
         }
 
     }
