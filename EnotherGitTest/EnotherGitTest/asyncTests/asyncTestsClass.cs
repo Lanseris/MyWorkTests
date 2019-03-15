@@ -27,6 +27,9 @@ namespace EnotherGitTest.asyncTests
 
         static void Factorial(int n)
         {
+            if (n < 1)
+                throw new Exception($"{n} : число не должно быть меньше 1");
+
             int result = 1;
             for (int i = 1; i <= n; i++)
             {
@@ -51,7 +54,7 @@ namespace EnotherGitTest.asyncTests
 
         //запуск задачь параллельно
         //отслеживание выполнения трёх асинхронных методов одновременно
-        public static async void FactorialAsyncParallel()
+        public static async Task FactorialAsyncParallel()
         {
             Console.WriteLine();
             Console.WriteLine("Параллельное выполлнение ассинхронных методов");
@@ -66,7 +69,19 @@ namespace EnotherGitTest.asyncTests
             //создаёт новую задачу, которая будет выполнена после завершения 
             //всех предоставленных задач.
             await Task.WhenAll(new[] { t1, t2, t3, t4, t5, t6 });
+        }
 
+        //отлавливание одной ошибки
+        public static async Task FactorialAsyncTryCatch(int n)
+        {
+            try
+            {
+                await Task.Run(() => Factorial(n));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
     }

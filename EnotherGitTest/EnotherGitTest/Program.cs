@@ -21,9 +21,26 @@ namespace EnotherGitTest
                         #region AsyncMeethodTests
                         AsyncTestsClass.ReadWriteAsync();
                         Console.WriteLine("Некоторая работа");
+
                         var task = AsyncTestsClass.FactorialAsyncSequential();
                         task.Wait();//ожидание выполнения асинхронного метода 
-                        AsyncTestsClass.FactorialAsyncParallel();
+
+                        var task2 = AsyncTestsClass.FactorialAsyncParallel();
+                        task2.Wait();
+
+                        Console.WriteLine();
+
+                        //отлавливание ошибок ассинхронного метода
+                        Console.WriteLine("Отлавливание ошибок ассинхронного метода (с ошибкой)");
+                        var task3 = AsyncTestsClass.FactorialAsyncTryCatch(-3);
+                        task3.Wait();
+
+                        Console.WriteLine();
+
+                        Console.WriteLine("Отлавливание ошибок ассинхронного метода (без ошибки)");
+                        var task4 = AsyncTestsClass.FactorialAsyncTryCatch(2);
+                        task4.Wait();
+
                         #endregion
                         break;
                     default:
