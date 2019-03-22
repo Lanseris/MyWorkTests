@@ -41,6 +41,9 @@ namespace EnotherGitTest
                         var task4 = AsyncTestsClass.FactorialAsyncTryCatch(2);
                         task4.Wait();
 
+                        Console.WriteLine("Отлавливание параллельных ошибок");
+                        var task5 = AsyncTestsClass.MultFactorialAsyncTryCatch();
+                        task5.Wait();
                         #endregion
                         break;
                     default:

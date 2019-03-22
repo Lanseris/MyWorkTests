@@ -80,7 +80,37 @@ namespace EnotherGitTest.asyncTests
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                await Task.Run(() => Console.WriteLine(ex.Message));
+            }
+            finally
+            {
+                await Task.Run(() => Console.WriteLine("await в блоке finalyy"));
+                Console.WriteLine();
+            }
+        }
+
+        //отлавливание нескольких ошибок
+        public static async Task MultFactorialAsyncTryCatch()
+        {
+            Task allTasks = null;
+
+            try
+            {
+                Task t1 = Task.Run(() => Factorial(-3));
+                Task t2 = Task.Run(() => Factorial(6));
+                Task t3 = Task.Run(() => Factorial(-10));
+
+                allTasks = Task.WhenAll(t1, t2, t3);
+                await allTasks;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Исключение: "+ ex.Message);
+                Console.WriteLine("IsFaulted: " + allTasks.IsFaulted);
+                foreach (var inx in allTasks.Exception.InnerExceptions)
+                {
+                    Console.WriteLine("Внутреннее исключение: " + inx.Message);
+                }
             }
         }
 
