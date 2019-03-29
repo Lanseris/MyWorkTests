@@ -25,17 +25,20 @@ namespace EnotherGitTest.asyncTests
             }
         }
 
-        static void Factorial(int n)
+        static async Task<int> Factorial(int n)
         {
             if (n < 1)
                 throw new Exception($"{n} : число не должно быть меньше 1");
 
             int result = 1;
-            for (int i = 1; i <= n; i++)
+            await Task.Run(()=>
             {
-                result *= i;
-            }
-            Console.WriteLine($"Факториал числа {n} равен {result}");
+                for (int i = 1; i <= n; i++)
+                {
+                    result *= i;
+                }
+            });
+            return result;
         }
 
         //запуск задачь последовательно
@@ -43,7 +46,7 @@ namespace EnotherGitTest.asyncTests
         {
             Console.WriteLine();
             Console.WriteLine("Последовательное выполнение асинхронных методов");
-            await Task.Run(() => Factorial(3));
+            await Task.Run(() => Console.WriteLine(Factorial(3).Result));
             await Task.Run(() => Factorial(4));
             await Task.Run(() => Factorial(5));
             await Task.Run(() => Factorial(6));
@@ -76,7 +79,9 @@ namespace EnotherGitTest.asyncTests
         {
             try
             {
-                await Task.Run(() => Factorial(n));
+                Task<int> t1 = Task.Run(() => Factorial(n));
+                await t1;
+                Console.WriteLine(t1.Result);
             }
             catch (Exception ex)
             {

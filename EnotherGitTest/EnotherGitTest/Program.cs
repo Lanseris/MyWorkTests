@@ -46,10 +46,13 @@ namespace EnotherGitTest
                         task5.Wait();
                         #endregion
                         break;
+                    case 2:
+                        break;
                     default:
                         break;
                 }
             }
+
 
             Console.Read();
         }
