@@ -24,9 +24,11 @@ namespace EnotherGitTest
 
                         var task = AsyncTestsClass.FactorialAsyncSequential();
                         task.Wait();//ожидание выполнения асинхронного метода 
+                        AsyncTestsClass.PrintIEnumerableT(task.Result);
 
                         var task2 = AsyncTestsClass.FactorialAsyncParallel();
                         task2.Wait();
+                        AsyncTestsClass.PrintIEnumerableT(task2.Result);
 
                         Console.WriteLine();
 
