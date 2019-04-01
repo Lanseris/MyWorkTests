@@ -61,17 +61,6 @@ namespace EnotherGitTest
                         #endregion
                         break;
                     case 2:
-                        string f = string.Empty;
-                        string h = null;
-                        f.Split(' ');
-                       // h.Split(' ');
-                        Console.WriteLine(f);
-                        Console.WriteLine(h);
-                        f = f + 'h';
-                        h = h + 'h';
-                        Console.WriteLine(f);
-                        Console.WriteLine(h);
-
                         break;
                     case 3:
                         break;
