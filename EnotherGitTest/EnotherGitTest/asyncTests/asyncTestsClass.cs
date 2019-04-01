@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace EnotherGitTest.asyncTests
 {
+
+    /// <summary>
+    /// проверить и переделать методы, в которых по мимо функционала присутствует вывод
+    /// </summary>
     public class AsyncTestsClass
     {
         public static async void ReadWriteAsync()
@@ -64,7 +68,7 @@ namespace EnotherGitTest.asyncTests
             //следующая не запустится 
         }
 
-        //запуск задачь параллельно
+        //запуск задач параллельно
         //отслеживание выполнения шести асинхронных методов одновременно
         public static async Task<List<int>> FactorialAsyncParallel()
         {
@@ -133,27 +137,59 @@ namespace EnotherGitTest.asyncTests
             }
         }
 
-        public static async Task FactorialAsyncCansel(int n)
+        //отрефактореный код
+        public static async Task<int> FactorialAsync(int n, CancellationToken token)
         {
+            int result = 0;
             try
             {
                 Task<int> t1 = Factorial(n);
                 await t1;
-                Console.WriteLine(t1.Result);
+                result = t1.Result;
             }
             catch (Exception ex)
             {
                 await Task.Run(() => Console.WriteLine(ex.Message));
+                result =  -1;
             }
             finally
             {
                 await Task.Run(() => Console.WriteLine("await в блоке finalyy"));
                 Console.WriteLine();
             }
+
+            return result;
         }
 
+        #region проверка остановки асинхронного метода
 
+        //факториал с задержкой, для проверки работы остановки выполнения асинхронного метода
+        public static void Factorial(int n, CancellationToken token)
+        {
+            int result = 1;
+            for (int i = 1; i <= n; i++)
+            {
+                if (token.IsCancellationRequested)
+                {
+                    Console.WriteLine("Операция прервана токеном");
+                    return;
+                }
+                result *= i;
+                Console.WriteLine($"Факториал числа {i} равен {result}");
+                Thread.Sleep(1000);
+            }
+        }
+        // определение асинхронного метода с проверкой токена
+        public static async void FactorialAsyncCansel(int n, CancellationToken token)
+        {
+            if (token.IsCancellationRequested)
+                return;
+            await Task.Run(() => Factorial(n, token));
+        }
+
+        #endregion
         #region auxiliary_methods
+
         public static void PrintIEnumerableT<T>(IEnumerable<T> collection)
         {
             foreach (var item in collection)
@@ -161,6 +197,7 @@ namespace EnotherGitTest.asyncTests
                 Console.WriteLine(item.ToString());
             }
         }
+       
         #endregion
     }
 }

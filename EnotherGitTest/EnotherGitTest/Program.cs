@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using EnotherGitTest.asyncTests;
 
 namespace EnotherGitTest
@@ -46,9 +47,33 @@ namespace EnotherGitTest
                         Console.WriteLine("Отлавливание параллельных ошибок");
                         var task5 = AsyncTestsClass.MultFactorialAsyncTryCatch();
                         task5.Wait();
+
+                        //тестирование остановки ассинхронного метода
+                        Console.WriteLine();
+                        Console.WriteLine("Остановка задачи");
+                        CancellationTokenSource cts = new CancellationTokenSource();
+                        CancellationToken token = cts.Token;
+                        AsyncTestsClass.FactorialAsyncCansel(6, token);
+                        Thread.Sleep(3000);
+                        cts.Cancel();
+                        Console.WriteLine("без остановки, выводил бы до 6-ти");
+
                         #endregion
                         break;
                     case 2:
+                        string f = string.Empty;
+                        string h = null;
+                        f.Split(' ');
+                       // h.Split(' ');
+                        Console.WriteLine(f);
+                        Console.WriteLine(h);
+                        f = f + 'h';
+                        h = h + 'h';
+                        Console.WriteLine(f);
+                        Console.WriteLine(h);
+
+                        break;
+                    case 3:
                         break;
                     default:
                         break;
