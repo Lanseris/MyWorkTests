@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using EnotherGitTest.asyncTests;
+using EnotherGitTest.Delegate;
 
 namespace EnotherGitTest
 {
@@ -61,6 +62,16 @@ namespace EnotherGitTest
                         #endregion
                         break;
                     case 2:
+                        #region DelegateTests
+
+                        DelegateTests.Greetings();
+                        Console.WriteLine();
+
+                        DelegateTests.MathOperationsTest(2,4);
+                        Console.WriteLine();
+
+
+                        #endregion
                         break;
                     case 3:
                         break;
