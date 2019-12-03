@@ -11,7 +11,15 @@ namespace EnotherGitTest
         {
             Console.WriteLine("Введите номер необходимой операции");
 
-            Console.WriteLine("1 - проверка асинхронных методов");
+            Console.WriteLine("0 - Выход");
+
+            Console.WriteLine("1 - очистка ");
+
+            Console.WriteLine("2 - тесты рандомного кода");
+
+            Console.WriteLine("3 - проверка асинхронных методов");
+
+            Console.WriteLine("4 - проверка делегатов");
 
             Console.Write("Номер:");
 
@@ -19,7 +27,17 @@ namespace EnotherGitTest
             {
                 switch (operationNumber)
                 {
+                    case 0:
+                        Environment.Exit(0);
+                        break;
                     case 1:
+                        Console.Clear();
+                        break;
+                    case 2:
+                        #region ТЕСТЫ РАНДОМНОГО КОДА
+                        #endregion
+                        break;
+                    case 3:
                         #region AsyncMeethodTests
                         AsyncTestsClass.ReadWriteAsync();
                         Console.WriteLine("Некоторая работа");
@@ -61,7 +79,7 @@ namespace EnotherGitTest
 
                         #endregion
                         break;
-                    case 2:
+                    case 4:
                         #region DelegateTests
 
                         DelegateTests.Greetings();
@@ -73,7 +91,7 @@ namespace EnotherGitTest
 
                         #endregion
                         break;
-                    case 3:
+                    case 5:
                         break;
                     default:
                         break;
