@@ -2,6 +2,11 @@
 using System.Threading;
 using EnotherGitTest.asyncTests;
 using EnotherGitTest.Delegate;
+using System.Linq;
+using System.Text;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
 
 namespace EnotherGitTest
 {
@@ -35,6 +40,8 @@ namespace EnotherGitTest
                         break;
                     case 2:
                         #region ТЕСТЫ РАНДОМНОГО КОДА
+                       
+
                         #endregion
                         break;
                     case 3:
@@ -92,6 +99,15 @@ namespace EnotherGitTest
                         #endregion
                         break;
                     case 5:
+                        #region проверка регулярок
+                        string testString = "24X2234хsdfg23sdfg444444";
+
+                        Regex rx = new Regex(@"\d{1,5}[x|х]\d{1,5}[x|х]\d{1,5}",
+          RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+                        var result = rx.Match(testString);
+                        Console.WriteLine(result);
+                        #endregion
                         break;
                     default:
                         break;
@@ -100,6 +116,92 @@ namespace EnotherGitTest
 
 
             Console.Read();
+        }
+
+        /// <summary>
+        /// мерж словарей
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="E"></typeparam>
+        /// <param name="firstDictionary"></param>
+        /// <param name="secondDictionary"></param>
+        /// <param name="resultSelector"></param>
+        /// <returns></returns>
+        public static Dictionary<T,E> DictionaryМerge<T, E>(Dictionary<T, E> firstDictionary, Dictionary<T, E> secondDictionary, Func<IEnumerable<KeyValuePair<T, E>>, E> resultSelector)
+        {
+            var concatinatedDic = firstDictionary.Concat(secondDictionary).GroupBy(x => x.Key, (firstType, secondType) => new { Key = firstType, Count = resultSelector(secondType) }).ToDictionary(k => k.Key,e=>e.Count);
+            return concatinatedDic;
+        }
+
+        /// <summary>
+        /// не нужны никакие ивенты
+        /// </summary>
+        public class TemplatePart
+        {
+            public bool _reading = false;
+
+            public string StartString;
+
+
+            public string EndString;
+
+            string _path = @"C:\ProgramData\InduSoft\I-LDS\2\Log\IndusoftTestLog.log";
+
+            public void Test()
+            {
+                using (StreamReader streamReader = new StreamReader(_path))
+                {
+                    while (!streamReader.EndOfStream)
+                    {
+                        LineProcessing(streamReader.ReadLine());
+                    }
+                }
+            }
+
+            public void LineProcessing(string fileRow)
+            {
+                bool result = CheckConditionMatch(fileRow);
+
+                if (result)
+                {
+                    _reading = !_reading;
+                }
+              
+                Console.WriteLine(fileRow);
+                Console.Write("Result: "+result);
+                Console.WriteLine(" Is_Reading: "+_reading);
+                Console.WriteLine();
+            }
+
+            public bool CheckConditionMatch(string stringForCheck)
+            {
+                if (_reading)
+                {
+                    if (!string.IsNullOrWhiteSpace(EndString))
+                    {
+                        if (stringForCheck.Contains(EndString))
+                        {
+
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        if (string.IsNullOrWhiteSpace(stringForCheck))
+                        {
+                            return true;
+                        }
+                    }
+                }
+                else
+                {
+                    if (stringForCheck.Contains(StartString))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
         }
     }
 }
