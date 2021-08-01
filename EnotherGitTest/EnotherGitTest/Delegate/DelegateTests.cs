@@ -62,10 +62,7 @@ namespace EnotherGitTest.Delegate
 
         private static int Multiply(int x, int y) => x * y;
 
-        private static decimal Square(int n)
-        {
-            return n * n;
-        }
+        private static decimal Square(int n) => n * n;
 
         #endregion
 
