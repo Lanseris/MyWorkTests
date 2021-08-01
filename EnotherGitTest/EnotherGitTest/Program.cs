@@ -2,6 +2,8 @@
 using System.Threading;
 using EnotherGitTest.asyncTests;
 using EnotherGitTest.Delegate;
+using EnotherGitTest.XmlSerializerTests;
+using EnotherGitTest.EventHandlers;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
@@ -25,6 +27,12 @@ namespace EnotherGitTest
             Console.WriteLine("3 - проверка асинхронных методов");
 
             Console.WriteLine("4 - проверка делегатов");
+
+            Console.WriteLine("5 - проверка регулярок");
+
+            Console.WriteLine("6 - сериализатор");
+
+            Console.WriteLine("7 - EventHeandlers");
 
             Console.Write("Номер:");
 
@@ -107,6 +115,27 @@ namespace EnotherGitTest
 
                         var result = rx.Match(testString);
                         Console.WriteLine(result);
+                        #endregion
+                        break;
+                    case 6:
+                        #region Serializer
+                        SerializeManager sm = new SerializeManager();
+                        sm.Notify += (x) => { Console.WriteLine(x); };
+                        sm.TrySerialize();
+                        sm.TryDeserialize();
+                        #endregion
+                        break;
+                    case 7:
+                        #region EvendHandlers
+                        ClassVsDelegateAndEH classVsDelegateAndEH = new ClassVsDelegateAndEH();
+
+                        Counter counter = new Counter(classVsDelegateAndEH);
+
+                        classVsDelegateAndEH.Print();
+                        classVsDelegateAndEH.Print();
+                        classVsDelegateAndEH.Print();
+                        classVsDelegateAndEH.Print();
+                        classVsDelegateAndEH.Print();
                         #endregion
                         break;
                     default:
